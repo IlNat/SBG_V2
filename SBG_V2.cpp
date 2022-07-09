@@ -19,7 +19,7 @@ public:
         do {
             cin >> input;
             if (input != 1 && input != 0)
-                cout << "Неправильный введён. Повторите ввод.\n";
+                cout << "Неправильный ввод. Повторите ввод.\n";
         } while (input != 1 && input != 0);
         isVertical = input;
         int firstXCord;

@@ -2,6 +2,17 @@
 #include "Field.h"
 using namespace std;
 
+Field::Field()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			field[i][j] == NOTHING;
+		}
+	}
+}
+
 void Field::setUnit(char sign, int XCord, int YCord)
 {
 	field[XCord][YCord] = sign;
@@ -37,7 +48,10 @@ void Field::print()
 			}
 			else
 			{
-				cout << field[i - 1][j - 1];
+				if (field[i - 1][j - 1] != NOTHING)
+					cout << field[i - 1][j - 1];
+				else
+					cout << ' ';
 			}
 		}
 		cout << '\n';
@@ -145,11 +159,50 @@ bool Field::isAvailable(int XCord, int YCord, int amountOfUnits, bool isVertical
 
 bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool isVertical, int caseNumber)
 {
-	if (YCord != 9)
+	if (!isVertical)
 	{
-		for (int i = 0; i < amountOfUnits; i++)
+		if (YCord != 9)
 		{
-			if (!isVertical)
+			if (caseNumber == 3) 
+			{
+				if (YCord == 0)
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord--][YCord] == SHIP && field[XCord++][YCord] == SHIP)
+						return false;
+				}
+				else 
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord--][YCord--] == SHIP && field[XCord--][YCord] == SHIP && field[XCord++][YCord] == SHIP && field[XCord][YCord--] == SHIP && field[XCord++][YCord--] == SHIP)
+						return false;
+				}
+			}
+			if (caseNumber == 1)
+			{
+				if (YCord == 0)
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord++][YCord] == SHIP)
+						return false;
+				}
+				else 
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord++][YCord] == SHIP && field[XCord][YCord--] == SHIP && field[XCord++][YCord--] == SHIP)
+						return false;
+				}
+			}
+			if (caseNumber == 2)
+			{
+				if (YCord == 0)
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord--][YCord] == SHIP)
+						return false;
+				}
+				else 
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord--][YCord--] == SHIP && field[XCord--][YCord] == SHIP && field[XCord][YCord--] == SHIP)
+						return false;
+				}
+			}
+			for (int i = 0; i < amountOfUnits; i++)
 			{
 				if (field[XCord][YCord + i] == SHIP)
 				{
@@ -170,28 +223,42 @@ bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool i
 					}
 				}
 			}
-			else
-			{
-				if (field[XCord + i][YCord] == SHIP)
-				{
-					return false;
-				}
-				if (caseNumber == 3 || caseNumber == 1)
-				{
-					if (field[XCord + i][YCord++] == SHIP)
-					{
-						return false;
-					}
-				}
-				if (caseNumber == 3 || caseNumber == 2)
-				{
-					if (field[XCord + i][YCord--] == SHIP)
-					{
-						return false;
-					}
-				}
-			}
 		}
+		else 
+
+	}
+	else
+	{
+		if (XCord != 0 && XCord != 9)
+			{
+				for (int i = 0; i < amountOfUnits; i++)
+				{
+					if (field[XCord + i][YCord] == SHIP)
+					{
+						return false;
+					}
+					if (caseNumber == 3 || caseNumber == 1)
+					{
+						if (field[XCord + i][YCord++] == SHIP)
+						{
+							return false;
+						}
+					}
+					if (caseNumber == 3 || caseNumber == 2)
+					{
+						if (field[XCord + i][YCord--] == SHIP)
+						{
+							return false;
+						}
+					}
+				}
+		}			
+		else 
+		
+	}
+	if (YCord != 9)
+	{
+		
 	}
 	else if (XCord == 0)
 	{
