@@ -167,110 +167,211 @@ bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool i
 			{
 				if (YCord == 0)
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord--][YCord] == SHIP && field[XCord++][YCord] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord + 1][YCord] == SHIP)
 						return false;
+					else
+						return true;
 				}
 				else 
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord--][YCord--] == SHIP && field[XCord--][YCord] == SHIP && field[XCord++][YCord] == SHIP && field[XCord][YCord--] == SHIP && field[XCord++][YCord--] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
 						return false;
+					else
+						return true;
 				}
 			}
 			if (caseNumber == 1)
 			{
 				if (YCord == 0)
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord++][YCord] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord + 1][YCord] == SHIP)
 						return false;
+					else
+						return true;
 				}
 				else 
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord++][YCord] == SHIP && field[XCord][YCord--] == SHIP && field[XCord++][YCord--] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
 						return false;
+					else
+						return true;
 				}
 			}
 			if (caseNumber == 2)
 			{
 				if (YCord == 0)
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord--][YCord] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP)
 						return false;
+					else
+						return true;
 				}
 				else 
 				{
-					if (field[XCord][YCord] == SHIP && field[XCord--][YCord--] == SHIP && field[XCord--][YCord] == SHIP && field[XCord][YCord--] == SHIP)
+					if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP)
 						return false;
+					else
+						return true;
 				}
 			}
 			for (int i = 0; i < amountOfUnits; i++)
 			{
 				if (field[XCord][YCord + i] == SHIP)
-				{
 					return false;
-				}
+				else
+					return true;
 				if (caseNumber == 3 || caseNumber == 1)
 				{
-					if (field[XCord++][YCord + i] == SHIP)
-					{
+					if (field[XCord + 1][YCord + i] == SHIP)
 						return false;
-					}
+					else
+						return true;
 				}
 				if (caseNumber == 3 || caseNumber == 2)
 				{
-					if (field[XCord--][YCord + i] == SHIP)
-					{
+					if (field[XCord - 1][YCord + i] == SHIP)
 						return false;
-					}
+					else
+						return true;
 				}
 			}
 		}
-		else 
-
-	}
-	else
-	{
-		if (XCord != 0 && XCord != 9)
+		else
+		{
+			if (amountOfUnits == 1)
 			{
-				for (int i = 0; i < amountOfUnits; i++)
+				if (XCord == 0)
 				{
-					if (field[XCord + i][YCord] == SHIP)
-					{
+					if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
 						return false;
-					}
-					if (caseNumber == 3 || caseNumber == 1)
-					{
-						if (field[XCord + i][YCord++] == SHIP)
-						{
-							return false;
-						}
-					}
-					if (caseNumber == 3 || caseNumber == 2)
-					{
-						if (field[XCord + i][YCord--] == SHIP)
-						{
-							return false;
-						}
-					}
+					else
+						return true;
 				}
-		}			
-		else 
-		
+				else if (XCord != 9)
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP && field[XCord + 1][YCord] == SHIP)
+						return false;
+					else
+						return true;
+				}
+				else
+				{
+					if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP)
+						return false;
+					else
+						return true;
+				}
+			}
+			else
+				return false;
+		}
 	}
-	if (YCord != 9)
+	else	
 	{
-		
-	}
-	else if (XCord == 0)
+	if (XCord != 9)
 	{
-
-	}
-	else if (XCord == 9)
-	{
-
+		if (caseNumber == 3)
+		{
+			if (XCord == 0)
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			else
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+		}
+		if (caseNumber == 1)
+		{
+			if (YCord == 0)
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			else
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+		}
+		if (caseNumber == 2)
+		{
+			if (YCord == 0)
+			{
+				if (field[XCord - 1][YCord] == SHIP && field[XCord][YCord] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			else
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP)
+					return false;
+				else
+					return true;
+			}
+		}
+		for (int i = 0; i < amountOfUnits; i++)
+		{
+			if (field[XCord + i][YCord] == SHIP)
+				return false;
+			else
+				return true;
+			if (caseNumber == 3 || caseNumber == 1)
+			{
+				if (field[XCord + i][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			if (caseNumber == 3 || caseNumber == 2)
+			{
+				if (field[XCord + i][YCord - 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+		}
 	}
 	else
 	{
-		if (field[XCord++][YCord--] == SHIP)
-		return true;
+		if (amountOfUnits == 1)
+		{
+			if (YCord == 0)
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			else if (YCord != 9)
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord + 1] == SHIP && field[XCord][YCord + 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+			else
+			{
+				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord - 1] == SHIP)
+					return false;
+				else
+					return true;
+			}
+		}
+		else
+			return false;
 	}
+	}
+	
 }

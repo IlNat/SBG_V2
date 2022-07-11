@@ -8,9 +8,10 @@ private:
 public: 
 	Field();
 	void setUnit(char sign, int XCord, int YCord);
-	char returnSign(int XCord, int YCord) { return field[XCord][YCord]; };
 	void print();
 	bool isAvailable(int XCord, int YCord, int amountOfUnits, bool isVertical);
 	bool checkForAvailability(int XCord, int YCord, int amountOfUnits, bool isVertical, int caseNumber);
+
+	char returnSign(int XCord, int YCord) { return field[XCord][YCord]; };
 };
 

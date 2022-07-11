@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "Field.h"
+#include "Ship.h"
 using namespace std;
 
 class FourDeckedShip
@@ -38,4 +39,13 @@ int main()
     Field userField;
     Field computerField;
     Field emptyComputerField;
+    int amountOfShips = 10;
+    // Расставление кораблей.
+    for (int i = 1; i < amountOfShips; i++)
+    {
+        if (i == 1)
+        {
+
+        }
+    }
 }
