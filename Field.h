@@ -9,8 +9,11 @@ public:
 	Field();
 	void setUnit(char sign, int XCord, int YCord);
 	void print();
-	bool isAvailable(int XCord, int YCord, int amountOfUnits, bool isVertical);
-	bool checkForAvailability(int XCord, int YCord, int amountOfUnits, bool isVertical, int caseNumber);
+
+	//bool isAvailable(int XCord, int YCord, int amountOfUnits, bool isVertical);
+	bool checkForAvailability(int XCord, int YCord, int amountOfUnits, bool isVertical);
+	bool checkForHorizontalLocationMistakes(int XCord, int YCord, int amountOfUnits);
+	bool checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfUnits);
 
 	char returnSign(int XCord, int YCord) { return field[XCord][YCord]; };
 };

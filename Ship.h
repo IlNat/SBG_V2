@@ -10,9 +10,13 @@ private:
 	int amountOfUnits;
 	bool isVertical;
 	bool isDestroyed;
+	Field& field;
 public:
-	Ship() {};
-	void setShip(Field& field);
-	void checkForDestroyed(Field& field);
+	Ship(int settingAmountOfUnits, Field& settingField) : amountOfUnits{settingAmountOfUnits}, field{settingField}
+	{
+		isDestroyed = false;
+	};
+	void setShip(int settingFirstXCord, int settingFirstYCord, int amountOfUnits, bool settingSide/*Field& field*/);
+	void checkForDestroyed(/*Field& field*/);
 };
 
