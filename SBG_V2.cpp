@@ -16,7 +16,7 @@ void setUserShips
 )
 {
     int amountOfShips = 10;
-    ;
+    
     // Расставление кораблей.
     for (int i = 0; i < amountOfShips; i++)
     {
@@ -113,7 +113,38 @@ void setComputerShips
     Ship* computerShips
 )
 {
+    int amountOfShips = 10;
+    bool isVertical;
+    for (int i = 0; i < amountOfShips; i++) 
+    {
+        int amountOfUnits;
+        bool isVertical;
+        bool flag = false;
+        int intIsVertical = rand() % 2;
+        int firstXCord, firstYCord;
 
+        if (intIsVertical == 1)
+            isVertical = true;
+        else
+            isVertical = false;
+
+        if (i == 0)
+            amountOfUnits = 4;
+        if (i == 1 || i == 2)
+            amountOfUnits = 3;
+        else if (i > 2 && i < 6)
+            amountOfUnits = 2;
+        else 
+            amountOfUnits = 1;
+        
+        do
+        {
+            firstXCord = rand() % 10;
+            firstYCord = rand() % 10;
+            flag = computerField.checkForAvailability(firstXCord, firstYCord, amountOfUnits, isVertical);
+        } while (!flag);
+        computerShips[i].setShip(firstXCord, firstYCord, isVertical);
+    }
 }
 
 void copyKnownPlaces(Field& computerField, Field& emptyComputerField)
@@ -262,30 +293,31 @@ void game()
 
     Ship* computerShips = new Ship[amountOfShips]
     {
-        {4, userField},
-        {3, userField},
-        {3, userField},
-        {2, userField},
-        {2, userField},
-        {2, userField},
-        {1, userField},
-        {1, userField},
-        {1, userField},
-        {1, userField}
+        {4, computerField},
+        {3, computerField},
+        {3, computerField},
+        {2, computerField},
+        {2, computerField},
+        {2, computerField},
+        {1, computerField},
+        {1, computerField},
+        {1, computerField},
+        {1, computerField}
     };
-
-    setUserShips
-    (
-        userField,
-        userShips
-    );
 
     setComputerShips
     (
         computerField,
         computerShips
     );
+    
+    setUserShips
+    (
+        userField,
+        userShips
+    );
 
+    cout << endl;
     do
     {
         cout << "Поле противника:\n";
@@ -295,6 +327,7 @@ void game()
         userField.print();
 
         makeNextMove(isPlayerMove, userField, computerField, emptyComputerField);
+        checkShips(amountOfAliveUserShips, amountOfAliveComputerShips, amountOfShips, userShips, computerShips);
 
     } while (amountOfAliveComputerShips != 0 && amountOfAliveUserShips != 0);
     if (amountOfAliveComputerShips == 0 && amountOfAliveUserShips == 0)
