@@ -2,7 +2,7 @@
 class Field
 {
 private: 
-	const int size = 10;
+	const int sizeOfLine = 10;
 	char field[10][10];	
 	enum { SHIP = '*', NOTHING = '#', HIT = '+', MISS = '-' };
 public: 

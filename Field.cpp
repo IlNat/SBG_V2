@@ -4,11 +4,11 @@ using namespace std;
 
 Field::Field()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < sizeOfLine; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (int j = 0; j < sizeOfLine; j++)
 		{
-			field[i][j] == NOTHING;
+			field[i][j] = NOTHING;
 		}
 	}
 }
@@ -62,14 +62,14 @@ bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool i
 {
 	if (!isVertical)
 	{
-		if (YCord + amountOfUnits - 1 < 10)
+		if (YCord + amountOfUnits - 1 < sizeOfLine)
 			return checkForHorizontalLocationMistakes(XCord, YCord, amountOfUnits);
 		else
 			return false;
 	}
 	else	
 	{
-		if (XCord + amountOfUnits - 1 < 10)
+		if (XCord + amountOfUnits - 1 < sizeOfLine)
 			return checkForVerticalLocationMistakes(XCord, YCord, amountOfUnits);
 		else
 			return false;
@@ -98,7 +98,7 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 					return true;
 			}
 		}
-		if (XCord == 0)
+		else if (XCord == 0)
 		{
 			if (YCord == 0)
 			{
@@ -115,7 +115,7 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 					return true;
 			}
 		}
-		if (XCord == 9)
+		else
 		{
 			if (YCord == 0)
 			{
@@ -206,7 +206,7 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 					return true;
 			}
 		}
-		if (YCord == 0)
+		else if (YCord == 0)
 		{
 			if (XCord == 0)
 			{
@@ -223,7 +223,7 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 					return true;
 			}
 		}
-		if (YCord == 9)
+		else 
 		{
 			if (XCord == 0)
 			{
@@ -240,6 +240,7 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 					return true;
 			}
 		}
+
 		for (int i = 0; i < amountOfUnits; i++)
 		{
 			if (field[XCord + i][YCord] == SHIP)

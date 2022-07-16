@@ -2,7 +2,7 @@
 #include "Ship.h"
 using namespace std;
 
-void Ship::setShip(int settingFirstXCord, int settingFirstYCord, int amountOfUnits, bool settingSide/*Field& field*/)
+void Ship::setShip(int settingFirstXCord, int settingFirstYCord, bool settingSide)
 {
 	isVertical = settingSide;
 	firstXCord = settingFirstXCord;
@@ -18,7 +18,7 @@ void Ship::setShip(int settingFirstXCord, int settingFirstYCord, int amountOfUni
 	
 }
 
-void Ship::checkForDestroyed(/*Field& field*/)
+void Ship::checkForDestroyed()
 {
 	int amountOfDestroyedUnits = 0;
 	if (!isVertical)
@@ -222,6 +222,11 @@ void Ship::checkForDestroyed(/*Field& field*/)
 			}
 		}
 	}
+}
+
+void Ship::checkDestroyedShip()
+{
+	isChecked = true;
 }
 
 
