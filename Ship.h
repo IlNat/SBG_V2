@@ -21,5 +21,7 @@ public:
 	void setShip(int settingFirstXCord, int settingFirstYCord, bool settingSide);
 	void checkForDestroyed();
 	void checkDestroyedShip();
+	bool returnStatusIsDestroyed() { return isDestroyed; }
+	bool returnStatusIsChecked() { return isChecked; }
 };
 

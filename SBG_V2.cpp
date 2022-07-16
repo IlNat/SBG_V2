@@ -12,75 +12,68 @@ enum { SHIP = '*', HIT = '+', MISS = '-', NOTHING = '#' };
 void setUserShips
 (
     Field& userField,
-    Ship& userFirstFourDeckedShip,
-    Ship& userFirstThreeDeckedShip,
-    Ship& userSecondThreeDeckedShip,
-    Ship& userFirstTwoDeckedShip,
-    Ship& userSecondTwoDeckedShip,
-    Ship& userThirdTwoDeckedShip,
-    Ship& userFirstOneDeckedShip,
-    Ship& userSecondOneDeckedShip,
-    Ship& userThirdOneDeckedShip,
-    Ship& userFourthOneDeckedShip
+    Ship* ships
 )
 {
     int amountOfShips = 10;
+    ;
     // Расставление кораблей.
-    for (int i = 1; i <= amountOfShips; i++)
+    for (int i = 0; i < amountOfShips; i++)
     {
+        userField.print();
         int amountOfUnits;
         bool isVertical;
         bool flag = false;
         int intIsVertical, firstXCord, firstYCord;
 
+        if (i == 0)
+        {
+            cout << "Установка четырёхпалубного корабля:\n";
+            amountOfUnits = 4;
+        }
         if (i == 1)
         {
-            cout << "Установка четырёхпалубного корабля: ";
-            amountOfUnits = 4;
+            cout << "Установка первого трёхпалубного корабля:\n";
+            amountOfUnits = 3;
         }
         if (i == 2)
         {
-            cout << "Установка первого трёхпалубного корабля: ";
+            cout << "Установка второго трёхпалубного корабля:\n";
             amountOfUnits = 3;
         }
         if (i == 3)
         {
-            cout << "Установка второго трёхпалубного корабля: ";
-            amountOfUnits = 3;
+            cout << "Установка первого двухпалубного корабля:\n";
+            amountOfUnits = 2;
         }
         if (i == 4)
         {
-            cout << "Установка первого двухпалубного корабля: ";
+            cout << "Установка второго двухпалубного корабля:\n";
             amountOfUnits = 2;
         }
         if (i == 5)
         {
-            cout << "Установка второго двухпалубного корабля: ";
+            cout << "Установка третьего двухпалубного корабля:\n";
             amountOfUnits = 2;
         }
         if (i == 6)
         {
-            cout << "Установка третьего двухпалубного корабля: ";
-            amountOfUnits = 2;
+            cout << "Установка первого однопалубного корабля:\n";
+            amountOfUnits = 1;
         }
         if (i == 7)
         {
-            cout << "Установка первого однопалубного корабля: ";
+            cout << "Установка второго однопалубного корабля:\n";
             amountOfUnits = 1;
         }
         if (i == 8)
         {
-            cout << "Установка второго однопалубного корабля: ";
+            cout << "Установка третьего однопалубного корабля:\n";
             amountOfUnits = 1;
         }
         if (i == 9)
         {
-            cout << "Установка третьего однопалубного корабля: ";
-            amountOfUnits = 1;
-        }
-        if (i == 10)
-        {
-            cout << "Установка четвёртого однопалубного корабля: ";
+            cout << "Установка четвёртого однопалубного корабля:\n";
             amountOfUnits = 1;
         }
 
@@ -105,46 +98,19 @@ void setUserShips
             firstXCord--;
             firstYCord--;
             flag = userField.checkForAvailability(firstXCord, firstYCord, amountOfUnits, isVertical);
-            if (!flag)
+            if (!flag || firstXCord < 0 || firstXCord > 9 || firstYCord < 0 || firstYCord > 9)
                 cout << "Неправильно введены координаты, повторите ввод.\n";
-        } while (!flag);
+        } while (!flag || firstXCord < 0 || firstXCord > 9 || firstYCord < 0 || firstYCord > 9);
 
-        if (i == 1)
-            userFirstFourDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 2)
-            userFirstThreeDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 3)
-            userSecondThreeDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 4)
-            userFirstTwoDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 5)
-            userSecondTwoDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 6)
-            userThirdTwoDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 7)
-            userFirstOneDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 8)
-            userSecondOneDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 9)
-            userThirdOneDeckedShip.setShip(firstXCord, firstYCord, isVertical);
-        if (i == 10)
-            userFourthOneDeckedShip.setShip(firstXCord, firstYCord, isVertical);
+        ships[i].setShip(firstXCord, firstYCord, isVertical);
+        
     }
 }
 
 void setComputerShips
 (
     Field& computerField,
-    Ship& compFirstFourDeckedShip,
-    Ship& compFirstThreeDeckedShip,
-    Ship& compSecondThreeDeckedShip,
-    Ship& compFirstTwoDeckedShip,
-    Ship& compSecondTwoDeckedShip,
-    Ship& compThirdTwoDeckedShip,
-    Ship& compFirstOneDeckedShip,
-    Ship& compSecondOneDeckedShip,
-    Ship& compThirdOneDeckedShip,
-    Ship& compFourthOneDeckedShip
+    Ship* computerShips
 )
 {
 
@@ -191,13 +157,13 @@ int userAttack(Field& computerField, Field& emptyComputerField)
     int XCord, YCord;
     do
     {
-        cout << "Введите координаты для атаки (x [от 1 до 10]; y [от 1 до 10]): \n";
+        cout << "Введите координаты для атаки по X и по Y(от 1-го до 10-ти): \n";
         cin >> XCord >> YCord;
         XCord--;
         YCord--;
         if (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord < 0 || XCord > 9 || YCord < 0 || YCord > 9)
             cout << "Введите другие координаты.\n";
-    } while (emptyComputerField.returnSign(XCord, YCord) != NOTHING && XCord > 9 && XCord < 0 && YCord < 0 && YCord > 9);
+    } while (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord > 9 || XCord < 0 || YCord < 0 || YCord > 9);
     if (computerField.returnSign(XCord, YCord) == NOTHING)
     {
         cout << "Промах.\n";
@@ -227,13 +193,52 @@ void makeNextMove(bool& isPlayerMove, Field& userField,Field& computerField, Fie
     }
 }
 
-bool gameOver()
+void checkShips
+(
+    int& amountOfAliveUserShips,
+    int& amountOfAliveComputerShips,
+    int amountOfShips,
+    Ship* userShips,
+    Ship* computerShips
+)
 {
-    
+
+    for (int i = 0; i < amountOfShips; i++)
+    {
+        if (userShips[i].returnStatusIsDestroyed() && !userShips[i].returnStatusIsChecked())
+        {
+            if (i == 0)
+                cout << "Ваш четырёхпалубный корабль потоплен.\n";
+            else if (i == 1 || i == 2)
+                cout << "Ваш трёхпалубный корабль потоплен.\n";
+            else if (i > 2 && i < 6)
+                cout << "Ваш двухпалубный корабль потоплен.\n";
+            else
+                cout << "Ваш однопалубный корабль потоплен.\n";
+            userShips[i].checkDestroyedShip();
+            amountOfAliveUserShips--;
+        }
+        if (computerShips[i].returnStatusIsDestroyed() && !computerShips[i].returnStatusIsChecked())
+        {
+            if (i == 0)
+                cout << "Четырёхпалубный корабль противника потоплен.\n";
+            else if (i == 1 || i == 2)
+                cout << "Трёхпалубный корабль противника потоплен.\n";
+            else if (i > 2 && i < 6)
+                cout << "Двухпалубный корабль противника потоплен.\n";
+            else
+                cout << "Однопалубный корабль противника потоплен.\n";
+            computerShips[i].checkDestroyedShip();
+            amountOfAliveComputerShips--;
+        }
+    }
 }
 
 void game()
 {
+    const int amountOfShips = 10;
+    int amountOfAliveUserShips = 10;
+    int amountOfAliveComputerShips = 10;
     bool isPlayerMove = true;
 
     // Поля игрока, компьютера.
@@ -241,56 +246,44 @@ void game()
     Field computerField;
     Field emptyComputerField;
 
-    Ship userFirstFourDeckedShip(4, userField);
-    Ship userFirstThreeDeckedShip(3, userField);
-    Ship userSecondThreeDeckedShip(3, userField);
-    Ship userFirstTwoDeckedShip(2, userField);
-    Ship userSecondTwoDeckedShip(2, userField);
-    Ship userThirdTwoDeckedShip(2, userField);
-    Ship userFirstOneDeckedShip(1, userField);
-    Ship userSecondOneDeckedShip(1, userField);
-    Ship userThirdOneDeckedShip(1, userField);
-    Ship userFourthOneDeckedShip(1, userField);
+    Ship* userShips = new Ship[amountOfShips]
+    {
+        {4, userField},
+        {3, userField},
+        {3, userField},
+        {2, userField},
+        {2, userField},
+        {2, userField},
+        {1, userField},
+        {1, userField},
+        {1, userField},
+        {1, userField}
+    };
 
-    Ship compFirstFourDeckedShip(4, computerField);
-    Ship compFirstThreeDeckedShip(3, computerField);
-    Ship compSecondThreeDeckedShip(3, computerField);
-    Ship compFirstTwoDeckedShip(2, computerField);
-    Ship compSecondTwoDeckedShip(2, computerField);
-    Ship compThirdTwoDeckedShip(2, computerField);
-    Ship compFirstOneDeckedShip(1, computerField);
-    Ship compSecondOneDeckedShip(1, computerField);
-    Ship compThirdOneDeckedShip(1, computerField);
-    Ship compFourthOneDeckedShip(1, computerField);
+    Ship* computerShips = new Ship[amountOfShips]
+    {
+        {4, userField},
+        {3, userField},
+        {3, userField},
+        {2, userField},
+        {2, userField},
+        {2, userField},
+        {1, userField},
+        {1, userField},
+        {1, userField},
+        {1, userField}
+    };
 
     setUserShips
     (
         userField,
-        userFirstFourDeckedShip,
-        userFirstThreeDeckedShip,
-        userSecondThreeDeckedShip,
-        userFirstTwoDeckedShip,
-        userSecondTwoDeckedShip,
-        userThirdTwoDeckedShip,
-        userFirstOneDeckedShip,
-        userSecondOneDeckedShip,
-        userThirdOneDeckedShip,
-        userFourthOneDeckedShip
+        userShips
     );
 
     setComputerShips
     (
         computerField,
-        compFirstFourDeckedShip,
-        compFirstThreeDeckedShip,
-        compSecondThreeDeckedShip,
-        compFirstTwoDeckedShip,
-        compSecondTwoDeckedShip,
-        compThirdTwoDeckedShip,
-        compFirstOneDeckedShip,
-        compSecondOneDeckedShip,
-        compThirdOneDeckedShip,
-        compFourthOneDeckedShip
+        computerShips
     );
 
     do
@@ -300,7 +293,18 @@ void game()
         
         cout << "Ваше поле:\n";
         userField.print();
-    } while (!gameOver);
+
+        makeNextMove(isPlayerMove, userField, computerField, emptyComputerField);
+
+    } while (amountOfAliveComputerShips != 0 && amountOfAliveUserShips != 0);
+    if (amountOfAliveComputerShips == 0 && amountOfAliveUserShips == 0)
+        cout << "Игра окончена! Ничья!\n";
+    else if (amountOfAliveComputerShips == 0)
+        cout << "Игра окончена! Победитель: Игрок!\n";
+    else if (amountOfAliveUserShips == 0)
+        cout << "Игра окончена! Победитель: Компьютер!\n";
+    else
+        cout << "ошиБка. всо плоха\n";
 }
 
 int main()
@@ -340,4 +344,5 @@ int main()
         }
         }
     } while (choice != 3);
+    return 0;
 }

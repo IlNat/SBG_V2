@@ -85,14 +85,14 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 		{
 			if (YCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord + 1][YCord] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord + 1][YCord] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord + 1][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord + 1][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -102,14 +102,14 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 		{
 			if (YCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord + 1][YCord] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord + 1][YCord] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord + 1][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord + 1][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -119,14 +119,14 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 		{
 			if (YCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -160,21 +160,21 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 		{
 			if (XCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord + 1][YCord] == SHIP && field[XCord + 1][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord + 1][YCord] == SHIP || field[XCord + 1][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else if (XCord != 9)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP && field[XCord + 1][YCord] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP && field[XCord + 1][YCord - 1] == SHIP && field[XCord + 1][YCord] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -193,14 +193,14 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 		{
 			if (XCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord][YCord + 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord - 1][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -210,14 +210,14 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 		{
 			if (XCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord + 1] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord - 1][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
@@ -227,14 +227,14 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 		{
 			if (XCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord - 1] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord - 1][YCord] == SHIP)
 					return false;
 				else
 					return true;
@@ -269,21 +269,21 @@ bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfU
 		{
 			if (YCord == 0)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord + 1] == SHIP && field[XCord - 1][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord][YCord + 1] == SHIP || field[XCord - 1][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else if (YCord != 9)
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord - 1] == SHIP && field[XCord - 1][YCord + 1] == SHIP && field[XCord][YCord + 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord - 1][YCord - 1] == SHIP || field[XCord - 1][YCord + 1] == SHIP || field[XCord][YCord + 1] == SHIP)
 					return false;
 				else
 					return true;
 			}
 			else
 			{
-				if (field[XCord][YCord] == SHIP && field[XCord - 1][YCord] == SHIP && field[XCord][YCord - 1] == SHIP && field[XCord - 1][YCord - 1] == SHIP)
+				if (field[XCord][YCord] == SHIP || field[XCord - 1][YCord] == SHIP || field[XCord][YCord - 1] == SHIP || field[XCord - 1][YCord - 1] == SHIP)
 					return false;
 				else
 					return true;
