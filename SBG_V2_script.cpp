@@ -1,17 +1,25 @@
 #include "SBG_V2_script.h"
 
+// Установка кораблей пользователя.
 void setUserShips(Field& userField, Ship* ships)
 {
-    int amountOfShips = 10;
+    int amountOfShips = 10; // Количество кораблей.
 
     // Расставление кораблей.
     for (int i = 0; i < amountOfShips; i++)
     {
-        userField.print();
-        int amountOfUnits;
-        bool isVertical = false;
-        bool flag = false;
-        int intIsVertical, firstXCord, firstYCord;
+        userField.print(); // Печать игрового поля игрока для наглядного представления доступного места.
+        int amountOfUnits; // Количество палуб(ячеек).
+
+        // Переменная "Вертикальный ли?", применимо к кораблям. По умолчанию устанавливается отрицательное значение.
+        // Если корабль не однопалубный, то возможно установить его направление.
+        bool isVertical = false; 
+
+        bool flag = false; // Флаг доступности, по умолчанию присваивается отрицательное значение.
+        
+        // Целочисленная переменная "Вертикальный ли?", необходима для ввода. 
+        // Первые координаты по осям X и Y.
+        int intIsVertical, firstXCord, firstYCord; 
 
         if (i == 0)
         {
@@ -63,6 +71,8 @@ void setUserShips(Field& userField, Ship* ships)
             cout << "Установка четвёртого однопалубного корабля:\n";
             amountOfUnits = 1;
         }
+
+        // Если корабль не однопалубный, то возможно установить его направление. В данном случае пользователю предлагают самому установить направление.
         if (amountOfUnits != 1)
         {
             do
@@ -79,32 +89,43 @@ void setUserShips(Field& userField, Ship* ships)
             else
                 isVertical = false;
         }
+
         do
         {
             cout << "Введите первые координаты по X и по Y(от 1-го до 10-ти): ";
             cin >> firstXCord >> firstYCord;
             firstXCord--;
             firstYCord--;
+
+            // Флаг доступности принимает значение метода класса "Field", который определяет - доступно ли место?
             flag = userField.checkForAvailability(firstXCord, firstYCord, amountOfUnits, isVertical);
+
             if (!flag || firstXCord < 0 || firstXCord > 9 || firstYCord < 0 || firstYCord > 9)
                 cout << "Неправильно введены координаты, повторите ввод.\n";
+            
         } while (!flag || firstXCord < 0 || firstXCord > 9 || firstYCord < 0 || firstYCord > 9);
 
         ships[i].setShip(firstXCord, firstYCord, isVertical);
-
     }
 }
 
+// Установка кораблей компьютера.
 void setComputerShips(Field& computerField, Ship* computerShips)
 {
-    int amountOfShips = 10;
-    bool isVertical = false;
+    int amountOfShips = 10; // Количество кораблей.
+    
     for (int i = 0; i < amountOfShips; i++)
     {
-        int amountOfUnits;
+        // Переменная "Вертикальный ли?", применимо к кораблям. По умолчанию устанавливается отрицательное значение.
+        // Если корабль не однопалубный, то возможно установить его направление.
+        bool isVertical = false;
+
+        // Флаг доступности, по умолчанию присваивается отрицательное значение.
         bool flag = false;
 
-        int firstXCord, firstYCord;
+        // Целочисленная переменная "Вертикальный ли?", необходима для ввода. 
+        // Первые координаты по осям X и Y.
+        int amountOfUnits, firstXCord, firstYCord;
 
         if (i == 0)
             amountOfUnits = 4;
@@ -115,6 +136,8 @@ void setComputerShips(Field& computerField, Ship* computerShips)
         else
             amountOfUnits = 1;
 
+        // Если корабль не однопалубный, то возможно установить его направление. 
+        // В данном случае компьютер при помощи функции "rand()" устанавливает направление корабля.
         if (amountOfUnits != 1)
         {
             int intIsVertical = rand() % 2;
@@ -128,25 +151,32 @@ void setComputerShips(Field& computerField, Ship* computerShips)
         {
             firstXCord = rand() % 10;
             firstYCord = rand() % 10;
+
+            // Флаг доступности принимает значение метода класса "Field", который определяет - доступно ли место?
             flag = computerField.checkForAvailability(firstXCord, firstYCord, amountOfUnits, isVertical);
+
         } while (!flag);
         computerShips[i].setShip(firstXCord, firstYCord, isVertical);
     }
 }
 
+// Копирование известных(все знаки, кроме знаков кораблей) мест из "computerField" в "emptyComputerField".
 void copyKnownPlaces(Field& computerField, Field& emptyComputerField)
 {
     for (int i = 0; i < 10; i++)
     {
         for (int j = 0; j < 10; j++)
         {
+            // Переменная "Знак" запоминает символ из "computerField". 
             char sign = computerField.returnSign(i, j);
+            // Если символ не "Корабль", то помещает его в "emptyComputerField".
             if (sign != SHIP)
                 emptyComputerField.setUnit(sign, i, j);
         }
     }
 }
 
+// Атака компьютера. Возвращает сообщение о промахе или попадании.
 int computerAttack(Field& userField, string& message)
 {
     srand(time(0));
@@ -172,6 +202,7 @@ int computerAttack(Field& userField, string& message)
     }
 }
 
+// Атака пользователя. Возвращает сообщение о промахе или попадании.
 int userAttack(Field& computerField, Field& emptyComputerField, string& message)
 {
     int XCord, YCord;
@@ -204,6 +235,7 @@ int userAttack(Field& computerField, Field& emptyComputerField, string& message)
 
 }
 
+// Определение хода: ходит игрок или ходит компьютер. При этом вовзращает сообщение с происходящим.
 void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message)
 {
     if (isPlayerMove)
@@ -222,6 +254,8 @@ void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Fi
     }
 }
 
+// Проверка кораблей на целостность. Перебор кораблей пользователя и компьютера. 
+// Если корабль уничтожен и не проверен, то вовзращает сообщение о том, чей и какой корабль уничтожен.
 string checkShips(int& amountOfAliveUserShips, int& amountOfAliveComputerShips, int amountOfShips, Ship* userShips, Ship* computerShips)
 {
     string message = "0";

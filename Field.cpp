@@ -2,6 +2,7 @@
 #include "Field.h"
 using namespace std;
 
+// Конструктор по умолчанию. Все элементы двумерного массива устанавливаются на "Пустые ячейки".
 Field::Field()
 {
 	for (int i = 0; i < sizeOfLine; i++)
@@ -13,11 +14,13 @@ Field::Field()
 	}
 }
 
+// Установка символа по координатам.
 void Field::setUnit(char sign, int XCord, int YCord)
 {
 	field[XCord][YCord] = sign;
 }
 
+// Печать поля.
 void Field::print()
 {
 	for (int i = 0; i < 11; i++)
@@ -58,6 +61,7 @@ void Field::print()
 	}
 }
 
+// Проверка на доступность. Принимает координаты по осям X и Y, количество палуб(ячеек), направление.
 bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool isVertical)
 {
 	if (!isVertical)
@@ -77,6 +81,7 @@ bool Field::checkForAvailability(int XCord, int YCord, int amountOfUnits, bool i
 	
 }
 
+// Проверка на доступность по горизонтали.
 bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountOfUnits)
 {
 	if (YCord != 9)
@@ -163,6 +168,7 @@ bool Field::checkForHorizontalLocationMistakes(int XCord, int YCord, int amountO
 	return true;
 }
 
+// Проверка на доступность по вертикали.
 bool Field::checkForVerticalLocationMistakes(int XCord, int YCord, int amountOfUnits)
 {
 	if (XCord != 9)

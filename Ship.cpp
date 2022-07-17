@@ -2,6 +2,8 @@
 #include "Ship.h"
 using namespace std;
 
+// ”становка корабл€ на поле с проверкой на доступность места.
+// ѕринимает первые координаты по ос€м X и Y, и направление.
 void Ship::setShip(int settingFirstXCord, int settingFirstYCord, bool settingSide)
 {
 	isVertical = settingSide;
@@ -18,6 +20,7 @@ void Ship::setShip(int settingFirstXCord, int settingFirstYCord, bool settingSid
 	
 }
 
+// ѕроверка: уничтожен ли корабль? ≈сли уничтожен, то вокруг корабл€ печатает символы промахов.
 void Ship::checkForDestroyed()
 {
 	int amountOfDestroyedUnits = 0;
@@ -225,6 +228,7 @@ void Ship::checkForDestroyed()
 	}
 }
 
+// ћен€ет поле "isChecked" класса на значение "true"(необходимо при переборе кораблей дл€ проверки на их целостность). 
 void Ship::checkDestroyedShip()
 {
 	isChecked = true;
