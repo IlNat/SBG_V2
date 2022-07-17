@@ -39,6 +39,7 @@ void Ship::checkForDestroyed()
 	}
 	if (amountOfDestroyedUnits == amountOfUnits)
 	{
+		isDestroyed = true;
 		if (!isVertical)
 		{
 			if (firstYCord == 0)
@@ -85,7 +86,7 @@ void Ship::checkForDestroyed()
 					}
 				}
 			}
-			else if (firstYCord == 10 - amountOfUnits)
+			else if (firstYCord <= 10 - amountOfUnits)
 			{
 				if (firstXCord == 0)
 				{
@@ -167,7 +168,7 @@ void Ship::checkForDestroyed()
 					}
 				}
 			}
-			else if (firstXCord == 10 - amountOfUnits)
+			else if (firstXCord <= 10 - amountOfUnits)
 			{
 				if (firstYCord == 0)
 				{
