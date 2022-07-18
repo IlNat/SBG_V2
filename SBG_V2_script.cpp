@@ -177,80 +177,200 @@ void copyKnownPlaces(Field& computerField, Field& emptyComputerField)
 }
 
 // Атака компьютера. Возвращает сообщение о промахе или попадании.
-int computerAttack(Field& userField, string& message)
+int computerAttack(Field& userField, string& message, ScoreStreak& computerScoreStreak)
 {
     srand(time(0));
-    int XCord, YCord;
+    int XCord, YCord, outputNumber;
     char sign;
-    do
+    bool useGunRun = false;
+    bool useBomberRun = false;
+    if (computerScoreStreak.returnAmountOfGunRun() > 0)
     {
-        XCord = rand() % 10;
-        YCord = rand() % 10;
-        sign = userField.returnSign(XCord, YCord);
-    } while (sign != NOTHING && sign != SHIP);
-    if (sign == SHIP)
-    {
-        userField.setUnit(HIT, XCord, YCord);
-        message = "Противник попал по Вашим кораблям.\n";
-        return 1;
+        useGunRun = true;
+        int intIsVertical = rand() % 2;
+        int cord = rand() % 10;
+        bool isVertical;
+        
+        if (intIsVertical == 1)
+            isVertical = true;
+        else
+            isVertical = false;
+
+        computerScoreStreak.gunRunAttack(cord, isVertical);
+        outputNumber = 0;
+        message = "Противник использует авиаудар!\n";
     }
-    else
+
+    if (useGunRun = false && computerScoreStreak.returnAmountOfBomberRun() > 0)
     {
-        userField.setUnit(MISS, XCord, YCord);
-        message = "Противник промахнулся.\n";
-        return 0;
+        XCord = rand() % 7 + 1;
+        YCord = rand() % 7 + 1;
+        computerScoreStreak.bomberRunAttack(XCord, YCord);
+        outputNumber = 0;
+        message = "Противник запросил бомбардировку!\n";
     }
+
+    if (useGunRun == false && useBomberRun == false) 
+    {
+        do
+        {
+            XCord = rand() % 10;
+            YCord = rand() % 10;
+            sign = userField.returnSign(XCord, YCord);
+        } while (sign != NOTHING && sign != SHIP);
+        if (sign == SHIP)
+        {
+            userField.setUnit(HIT, XCord, YCord);
+            message = "Противник попал по Вашим кораблям.\n";
+            outputNumber = 1;
+        }
+        else
+        {
+            userField.setUnit(MISS, XCord, YCord);
+            message = "Противник промахнулся.\n";
+            outputNumber = 0;
+        }
+    }
+    return outputNumber;
 }
 
 // Атака пользователя. Возвращает сообщение о промахе или попадании.
-int userAttack(Field& computerField, Field& emptyComputerField, string& message)
+int userAttack(Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak)
 {
-    int XCord, YCord;
-    do
-    {
-        cout << "Введите координаты для атаки по X и по Y(от 1-го до 10-ти): \n";
-        cin >> XCord >> YCord;
-        XCord--;
-        YCord--;
-        if (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord < 0 || XCord > 9 || YCord < 0 || YCord > 9)
-            cout << "Введите другие координаты.\n";
-    } while (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord > 9 || XCord < 0 || YCord < 0 || YCord > 9);
-    if (computerField.returnSign(XCord, YCord) == NOTHING)
-    {
-        message = "Промах.\n";
-        computerField.setUnit(MISS, XCord, YCord);
-        emptyComputerField.setUnit(MISS, XCord, YCord);
-        copyKnownPlaces(computerField, emptyComputerField);
+    int XCord, YCord, outputNumber = 0;
+    bool useGunRun = false;
+    bool useBomberRun = false;
+    char choice;
 
-        return 0;
-    }
-    if (computerField.returnSign(XCord, YCord) == SHIP)
+    if (userScoreStreak.returnAmountOfGunRun() > 0)
     {
-        message = "Попадание.\n";
-        computerField.setUnit(HIT, XCord, YCord);
-        emptyComputerField.setUnit(HIT, XCord, YCord);
-        copyKnownPlaces(computerField, emptyComputerField);
-        return 1;
-    }
+        do
+        {
+            cout << "Хотите использовать авиаудар[Y/N]?\n";
+            cin >> choice;
+            choice = tolower((char)choice);
+            if (choice != 'y' && choice != 'n')
+                cout << "Повторите ввод.\n";
+        } while (choice != 'y' && choice != 'n');
+        if (choice == 'y')
+        {
+            useGunRun = true;
+            int cord;
+            int intIsVertical;
+            bool isVertical;
+            do {
+                cout << "Как полетит самолёт?\n1 - по вертикали;\n2 - по горизонтали.\n";
+                cin >> intIsVertical;
+                if (intIsVertical != 1 && intIsVertical != 2)
+                    cout << "Повторите ввод.\n";
+            } while (intIsVertical != 1 && intIsVertical != 2);
 
+            if (intIsVertical == 1)
+                isVertical = true;
+            else
+                isVertical = false;
+
+            do {
+                cout << "По какой координате полетит самолёт(от 1-го до 10-ти)?\n";
+                cin >> cord;
+                cord--;
+                if (cord < 0 && cord > 9)
+                    cout << "Повторите ввод.\n";
+            } while (cord < 0 && cord > 9);
+            userScoreStreak.gunRunAttack(cord, isVertical);
+            outputNumber = 0;
+            message = "Бррррт!\n";
+        }
+    }
+    if (userScoreStreak.returnAmountOfBomberRun() > 0 && useGunRun == false)
+    {
+        do
+        {
+            cout << "Хотите использовать бомбардировку[Y/N]?\n";
+            cin >> choice;
+            choice = tolower((char)choice);
+            if (choice != 'y' && choice != 'n')
+                cout << "Повторите ввод.\n";
+        } while (choice != 'y' && choice != 'n');
+
+        if (choice == 'y')
+        {
+            useBomberRun = true;
+            do {
+                cout << "По какой координате произвести бомбардировку(по осям X и Yот 2-х до 9-ти)? Бомбардировки не производятся по краям поля.\n";
+                cin >> XCord >> YCord;
+                XCord--;
+                YCord--;
+                if (XCord < 1 && XCord > 8 && YCord < 1 && YCord > 8)
+                    cout << "Повторите ввод.\n";
+            } while (XCord < 1 && XCord > 8 && YCord < 1 && YCord > 8);
+            userScoreStreak.bomberRunAttack(XCord, YCord);
+            outputNumber = 0;
+            message = "Бомбы сброшены!\n";
+        }
+    }
+    
+    
+    if (useGunRun == false && useBomberRun == false)
+    {
+        do
+        {
+            cout << "Введите координаты для атаки по X и по Y(от 1-го до 10-ти): \n";
+            cin >> XCord >> YCord;
+            XCord--;
+            YCord--;
+            if (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord < 0 || XCord > 9 || YCord < 0 || YCord > 9)
+                cout << "Введите другие координаты.\n";
+        } while (emptyComputerField.returnSign(XCord, YCord) != NOTHING || XCord > 9 || XCord < 0 || YCord < 0 || YCord > 9);
+        if (computerField.returnSign(XCord, YCord) == NOTHING)
+        {
+            message = "Промах.\n";
+            computerField.setUnit(MISS, XCord, YCord);
+            emptyComputerField.setUnit(MISS, XCord, YCord);
+            copyKnownPlaces(computerField, emptyComputerField);
+
+            outputNumber = 0;
+        }
+        if (computerField.returnSign(XCord, YCord) == SHIP)
+        {
+            message = "Попадание.\n";
+            computerField.setUnit(HIT, XCord, YCord);
+            emptyComputerField.setUnit(HIT, XCord, YCord);
+            copyKnownPlaces(computerField, emptyComputerField);
+            outputNumber = 1;
+        }
+    }
+    return outputNumber;
 }
 
 // Определение хода: ходит игрок или ходит компьютер. При этом вовзращает сообщение с происходящим.
-void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message)
+void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak, ScoreStreak& computerScoreStreak, int& userStreak, int& computerStreak)
 {
     if (isPlayerMove)
     {
-        if (userAttack(computerField, emptyComputerField, message) == 0)
+        if (userAttack(computerField, emptyComputerField, message, userScoreStreak) == 0)
+        {
             isPlayerMove = false;
+            userStreak = 0;
+        }
         else
+        {
             isPlayerMove = true;
+            userStreak++;
+        }
     }
     else
     {
-        if (computerAttack(userField, message) == 1)
+        if (computerAttack(userField, message, computerScoreStreak) == 1)
+        {
             isPlayerMove = false;
+            computerStreak++;
+        }
         else
+        {
             isPlayerMove = true;
+            computerStreak = 0;
+        }
     }
 }
 

@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include "Field.h"
 #include "Ship.h"
+#include "ScoreStreak.h"
 #pragma once
 
 using namespace std;
@@ -22,13 +23,13 @@ void setComputerShips(Field& computerField, Ship* computerShips);
 void copyKnownPlaces(Field& computerField, Field& emptyComputerField);
 
 // Атака компьютера. Возвращает сообщение о промахе или попадании.
-int computerAttack(Field& userField, string& message);
+int computerAttack(Field& userField, string& message, ScoreStreak& copmuterScoreStreak);
 
 // Атака пользователя. Возвращает сообщение о промахе или попадании.
-int userAttack(Field& computerField, Field& emptyComputerField, string& message);
+int userAttack(Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak);
 
 // Определение хода: ходит игрок или ходит компьютер. При этом вовзращает сообщение с происходящим.
-void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message);
+void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak, ScoreStreak& copmuterScoreStreak, int& userStreak, int& computerStreak);
 
 // Проверка кораблей на целостность. Перебор кораблей пользователя и компьютера. 
 // Если корабль уничтожен и не проверен, то вовзращает сообщение о том, чей и какой корабль уничтожен.

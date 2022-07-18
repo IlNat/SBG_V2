@@ -10,15 +10,21 @@ using namespace std;
 
 void game()
 {
+    system("cls");
     const int amountOfShips = 10;
     int amountOfAliveUserShips = 10;
     int amountOfAliveComputerShips = 10;
+    int userStreak = 0;
+    int computerStreak = 0;
     bool isPlayerMove = true;
 
     // Поля игрока, компьютера.
     Field userField;
     Field computerField;
     Field emptyComputerField;
+
+    ScoreStreak userScoreStreak(computerField);
+    ScoreStreak computerScoreStreak(userField);
 
     Ship* userShips = new Ship[amountOfShips]
     {
@@ -52,14 +58,15 @@ void game()
     
     setUserShips(userField, userShips);
 
-    /* 
+     
     computerField.print();
     cout << endl;
-    */
+    
     string messageOfShipStatus;
     string messageOfAttackStatus;
     do
     {
+        system("cls");
         if (isPlayerMove)
         {
             cout << "Поле противника:\n";
@@ -74,8 +81,26 @@ void game()
         if (messageOfShipStatus != "0")
             cout << messageOfShipStatus;
 
-        makeNextMove(isPlayerMove, userField, computerField, emptyComputerField, messageOfAttackStatus);
+        makeNextMove(isPlayerMove, userField, computerField, emptyComputerField, messageOfAttackStatus, userScoreStreak, computerScoreStreak, userStreak, computerStreak);
         messageOfShipStatus = checkShips(amountOfAliveUserShips, amountOfAliveComputerShips, amountOfShips, userShips, computerShips);
+
+        if (userStreak == 2)
+        {
+            cout << "Вам доступен авиаудар!\n";
+            userScoreStreak.increaseAmountOfGunRun();
+        }
+        
+        if (userStreak == 3)
+        {
+            cout << "Вам доступна бомбардировка!\n";
+            userScoreStreak.increaseAmountOfBomberRun();
+        }
+
+        if (computerStreak == 2)
+            computerScoreStreak.increaseAmountOfGunRun();
+        
+        if (computerStreak == 3)
+            computerScoreStreak.increaseAmountOfBomberRun();
 
     } while (amountOfAliveComputerShips != 0 && amountOfAliveUserShips != 0);
 
@@ -94,7 +119,7 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     srand(time(0));
-    cout << "Hello World!\n";
+    //cout << "Hello World!\n";
     cout << "Добро пожаловать в игру \"Морской бой\"!\n";
     int choice;
     do {
