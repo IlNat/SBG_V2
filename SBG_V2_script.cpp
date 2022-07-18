@@ -344,11 +344,11 @@ int userAttack(Field& computerField, Field& emptyComputerField, string& message,
 }
 
 // Определение хода: ходит игрок или ходит компьютер. При этом вовзращает сообщение с происходящим.
-void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak, ScoreStreak& computerScoreStreak, int& userStreak, int& computerStreak)
+void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& messageOfUserAttackStatus, string& messageOfComputerAttackStatus, ScoreStreak& userScoreStreak, ScoreStreak& computerScoreStreak, int& userStreak, int& computerStreak)
 {
     if (isPlayerMove)
     {
-        if (userAttack(computerField, emptyComputerField, message, userScoreStreak) == 0)
+        if (userAttack(computerField, emptyComputerField, messageOfUserAttackStatus, userScoreStreak) == 0)
         {
             isPlayerMove = false;
             userStreak = 0;
@@ -361,7 +361,7 @@ void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Fi
     }
     else
     {
-        if (computerAttack(userField, message, computerScoreStreak) == 1)
+        if (computerAttack(userField, messageOfComputerAttackStatus, computerScoreStreak) == 1)
         {
             isPlayerMove = false;
             computerStreak++;

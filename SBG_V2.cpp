@@ -23,6 +23,7 @@ void game()
     Field computerField;
     Field emptyComputerField;
 
+    // Серии очков пользователя и компьютера.
     ScoreStreak userScoreStreak(computerField);
     ScoreStreak computerScoreStreak(userField);
 
@@ -63,7 +64,8 @@ void game()
     cout << endl;
     
     string messageOfShipStatus;
-    string messageOfAttackStatus;
+    string messageOfUserAttackStatus;
+    string messageOfComputerAttackStatus;
     do
     {
         system("cls");
@@ -76,12 +78,13 @@ void game()
             userField.print();
         }
 
-        cout << messageOfAttackStatus;
+        cout << messageOfUserAttackStatus;
+        cout << messageOfComputerAttackStatus;
 
         if (messageOfShipStatus != "0")
             cout << messageOfShipStatus;
 
-        makeNextMove(isPlayerMove, userField, computerField, emptyComputerField, messageOfAttackStatus, userScoreStreak, computerScoreStreak, userStreak, computerStreak);
+        makeNextMove(isPlayerMove, userField, computerField, emptyComputerField, messageOfUserAttackStatus, messageOfComputerAttackStatus, userScoreStreak, computerScoreStreak, userStreak, computerStreak);
         messageOfShipStatus = checkShips(amountOfAliveUserShips, amountOfAliveComputerShips, amountOfShips, userShips, computerShips);
 
         if (userStreak == 2)
@@ -112,6 +115,13 @@ void game()
         cout << "Игра окончена! Победитель: Компьютер!\n";
     else
         cout << "ошиБка. всо плоха\n";
+
+    delete[] userShips;
+    delete[] computerShips;
+
+    userField.~Field();
+    computerField.~Field();
+    emptyComputerField.~Field();
 }
 
 int main()
@@ -123,7 +133,7 @@ int main()
     cout << "Добро пожаловать в игру \"Морской бой\"!\n";
     int choice;
     do {
-        cout << "Список команд:\n1 - начать игру;\n2 - показать правила игры;\n3 - выйти из игры.\n Введите команду: ";
+        cout << "Список команд:\n1 - начать игру;\n2 - показать правила игры;\n3 - выйти из игры.\nВведите команду: ";
         cin >> choice;
         switch (choice) 
         {
@@ -136,7 +146,17 @@ int main()
         case 2:
         {
             cout << "Правила игры:\n";
-            // < Правила игры. >
+            cout << "Изначально игрок расставляет корабли по своим координатам. Всего 10 кораблей, из них: \n1--Четырёхпалубный\n2-----Трёхпалубных\n3-----Двухпалубных\n4-----Однопалубных\n";
+            cout << "Корабли не должны соприкасаться между собой вплотную и наискосок.\n";
+            cout << "После расстановки кораблей Вы должны будете начать битву. Введите координаты по осям X и Y от 1-го до 10-ти для атаки.\n";
+            cout << "Если Вы или Ваш противник попал по чьему-то кораблю, то игроку или компьютеру будет доступен ход пока не промахнётся.\n";
+            cout << "Если Вы или Ваш противник 2 раза подряд попал по чьему-то кораблю, то ему будет доступна первая серия очков \"Авиаудар\", принцип дейтсвия достаточно прост,\n";
+            cout << "Вам необходимо будет назначить пролёт по вертикали или горизонтали, дальше пилот сделает своё дело.\n";
+            cout << "Тот самый выбранный пролёт будет атакован и все ячейки пролёта будут заменены на противоположные знаки(Ничего -> Промах; Корабль -> Попадание).\n";
+            cout << "Существует ещё одна серия очков - \"Бомбардировка\", она даётся за 3 попадания подряд.\n";
+            cout << "Назначьте координаты, но будьте внимательны! Бомбардировка не бъёт по крайним полям! Назначить можно удар по осям X и Y от 2-х ло 9-ти.\n";
+            cout << "Но главная задача игры - уничтожить корабли противника, пока тот не уничтожит Ваши.\n";
+            cout << "Удачи!\n";
             break;
         }
         case 3:

@@ -27,5 +27,11 @@ public:
 
 	// Вовзращение элемента двумерного массива.
 	char returnSign(int XCord, int YCord) { return field[XCord][YCord]; };
+
+	~Field()
+	{
+		if (field != nullptr)
+			delete[] field;
+	}
 };
 

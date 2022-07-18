@@ -29,7 +29,7 @@ int computerAttack(Field& userField, string& message, ScoreStreak& copmuterScore
 int userAttack(Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak);
 
 // Определение хода: ходит игрок или ходит компьютер. При этом вовзращает сообщение с происходящим.
-void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& message, ScoreStreak& userScoreStreak, ScoreStreak& copmuterScoreStreak, int& userStreak, int& computerStreak);
+void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Field& emptyComputerField, string& messageOfUserAttackStatus, string& messageOfComputerAttackStatus, ScoreStreak& userScoreStreak, ScoreStreak& copmuterScoreStreak, int& userStreak, int& computerStreak);
 
 // Проверка кораблей на целостность. Перебор кораблей пользователя и компьютера. 
 // Если корабль уничтожен и не проверен, то вовзращает сообщение о том, чей и какой корабль уничтожен.
