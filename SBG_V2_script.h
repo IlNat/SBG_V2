@@ -34,3 +34,15 @@ void makeNextMove(bool& isPlayerMove, Field& userField, Field& computerField, Fi
 // Проверка кораблей на целостность. Перебор кораблей пользователя и компьютера. 
 // Если корабль уничтожен и не проверен, то вовзращает сообщение о том, чей и какой корабль уничтожен.
 string checkShips(int& amountOfAliveUserShips, int& amountOfAliveComputerShips, int amountOfShips, Ship* userShips, Ship* computerShips);
+
+// Печать картинки с якорем.
+void printAnchor();
+
+// Печать картинки с ничьёй.
+void printDraw();
+
+// Печать картинки с победой.
+void printWin();
+
+// Печать картинки с поражением.
+void printLose();

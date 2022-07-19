@@ -108,11 +108,20 @@ void game()
     } while (amountOfAliveComputerShips != 0 && amountOfAliveUserShips != 0);
 
     if (amountOfAliveComputerShips == 0 && amountOfAliveUserShips == 0)
+    {
+        printDraw();
         cout << "Игра окончена! Ничья!\n";
-    else if (amountOfAliveComputerShips == 0)
+    }
+    else if (amountOfAliveComputerShips == 0) 
+    {
+        printWin();
         cout << "Игра окончена! Победитель: Игрок!\n";
-    else if (amountOfAliveUserShips == 0)
+    }
+    else if (amountOfAliveUserShips == 0) 
+    {
+        printLose();
         cout << "Игра окончена! Победитель: Компьютер!\n";
+    }
     else
         cout << "ошиБка. всо плоха\n";
 
@@ -130,6 +139,7 @@ int main()
     SetConsoleOutputCP(1251);
     srand(time(0));
     //cout << "Hello World!\n";
+    printAnchor();
     cout << "Добро пожаловать в игру \"Морской бой\"!\n";
     int choice;
     do {
