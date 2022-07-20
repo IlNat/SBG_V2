@@ -1,11 +1,13 @@
 #include "ScoreStreak.h"
 
+// Констуктор класса.
 ScoreStreak::ScoreStreak(Field& settingEnemyField) : enemyField{settingEnemyField}
 {
 	amountOfGunRun = 0;
 	amountOfBomberRun = 0;
 }
 
+// Атака "Авиаудара". По вертикали или горизонтали в ряду выставляются противоположные знаки.
 void ScoreStreak::gunRunAttack(int Cord, bool isVertical)
 {
 	if (!isVertical)
@@ -31,6 +33,7 @@ void ScoreStreak::gunRunAttack(int Cord, bool isVertical)
 	amountOfGunRun--;
 }
 
+// Атака "Бомбардировки". На площади в 3*3 выставляются противоположные знаки.
 void ScoreStreak::bomberRunAttack(int XCord, int YCord)
 {
 	for (int i = -1; i < 2; i++)
